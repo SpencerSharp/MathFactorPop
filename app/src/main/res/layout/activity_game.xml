@@ -2,15 +2,11 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/holo_blue_light"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/gameActivityRelativeLayout"
 
     tools:context="com.example.spencersharp.mathfactorpop.MainActivity">
-
-    <TextView
-        android:id="@+id/testText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

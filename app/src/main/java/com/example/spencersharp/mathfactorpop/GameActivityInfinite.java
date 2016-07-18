@@ -1,33 +1,18 @@
 package com.example.spencersharp.mathfactorpop;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.RemoteViews;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.TreeMap;
 
-public class GameActivity extends AppCompatActivity
+public class GameActivityInfinite extends AppCompatActivity
 {
     public static final long bubbleRadius = 120;
     public static final long bubbleMillisOnScreen = 5000;
@@ -46,7 +31,9 @@ public class GameActivity extends AppCompatActivity
     public int score;
     static long tickRate;
     ArrayList<Bubble> bubbles;
-    ArrayList<BubbleView> bubbleViews;
+    ArrayList<BubbleViewTime> bubbleViews;
+
+    static Context context;
 
     CountDownTimer timer;
 
@@ -55,6 +42,13 @@ public class GameActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         relativeLayout = (RelativeLayout) findViewById(R.id.gameActivityRelativeLayout);
+
+        context = this;
+
+        final MediaPlayer mp = MediaPlayer.create(this, R.raw.backgroundmusic);
+        mp.setLooping(true);
+        mp.setVolume(0.5f, 0.5f);
+
 
         bubbleViews = new ArrayList<>();
         bubbles = new ArrayList<>();
@@ -86,7 +80,7 @@ public class GameActivity extends AppCompatActivity
         numberBox = new TextView(this);
         clockField = new TextView(this);
         scoreBox.setText("0");
-        scoreBox.setX(100);
+        scoreBox.setX(0);
         numberBox.setTextSize(30.0f);
         numberBox.setX(screenWidth/2);
         numberBox.setText("72");
@@ -109,7 +103,7 @@ public class GameActivity extends AppCompatActivity
         /**/
         bubbles = generateBubblesFromParams(0.0, 0);
 
-
+        mp.start();
         //Count down 3...2...1...Go!
         timer = new CountDownTimer(totalMillis, 15) {
 
@@ -179,12 +173,19 @@ public class GameActivity extends AppCompatActivity
         while(!hasEnoughFactors)
         {
             long rand = (long)(Math.random() * ((100 - 50) + 1) + 50);
+            int numFactors = 0;
             for(int i = 1; i <=rand; i++)
             {
-                if(rand%i==)
+                if(rand%i==1)
+                    numFactors++;
+            }
+            if(numFactors>3)
+            {
+                hasEnoughFactors = true;
+                ret = rand;
             }
         }
-        return ;
+        return ret;
     }
 
     public long genFactorOf(long numberBeingFactored)
@@ -251,9 +252,9 @@ public class GameActivity extends AppCompatActivity
         while(retBubbles.size()<numBubbles)
         {
             //Code to determine xPosition - TODO: Make sure it doesnt overlap with other bubbles
-            long xPosition = (long)(Math.random() * (((screenWidth-bubbleRadius) - bubbleRadius) + 1) + bubbleRadius);
+            long xPosition = (long)(Math.random() * (screenWidth-(bubbleRadius*2) + 1));
             //Code for determining initOffset
-            long initTime = (long)(Math.random() * (((totalMillis-bubbleMillisOnScreen) - 0) + 1) + 0);
+            long initTime = (long)(Math.random() * (((totalMillis-bubbleMillisOnScreen) - 10) + 1) + 10);
             long initOffset =(long) (initTime*incrementDistance)*(-1);
             Log.d("initOffset",""+initOffset);
             //Code for number in the bubble
@@ -288,7 +289,7 @@ public class GameActivity extends AppCompatActivity
     {
         score = 0;
         //Move existing views (animate?)
-        for(BubbleView bV : bubbleViews)
+        for(BubbleViewTime bV : bubbleViews)
         {
             bV.setY(bV.bubble.getYAtMilli(curMilli));
         }
@@ -301,7 +302,7 @@ public class GameActivity extends AppCompatActivity
             if(yOnMilli >= 0 && yOnMilli <= screenHeight)
             {
                 boolean doesViewForBubbleAlreadyExist = false;
-                for(BubbleView bV : bubbleViews)
+                for(BubbleViewTime bV : bubbleViews)
                 {
                     if(bV.getID()==bubbleID)
                         doesViewForBubbleAlreadyExist = true;
@@ -310,7 +311,7 @@ public class GameActivity extends AppCompatActivity
                 {
                     //Add new bubbleView
                     Log.d("added bV",""+bubble);
-                    bubbleViews.add(new BubbleView(this,bubble));
+                    bubbleViews.add(new BubbleViewTime(this,bubble));
                     relativeLayout.addView(bubbleViews.get(bubbleViews.size() - 1));
                 }
             }
@@ -331,7 +332,7 @@ public class GameActivity extends AppCompatActivity
             long yOnMilli = bubbleViews.get(index).bubble.getYAtMilli(curMilli);
             if(yOnMilli > screenHeight)
             {
-                BubbleView remove = bubbleViews.remove(index);
+                BubbleViewTime remove = bubbleViews.remove(index);
                 relativeLayout.removeView(remove);
             } else
                 index++;

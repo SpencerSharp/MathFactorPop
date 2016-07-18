@@ -1,32 +1,29 @@
 package com.example.spencersharp.mathfactorpop;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewPropertyAnimator;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-public class BubbleView extends Button implements View.OnClickListener
+public class BubbleViewInfinite extends Button implements View.OnClickListener
 {
-    public static long bubbleRadius = GameActivity.bubbleRadius; //Radius of the bubble in dp
-    public static double incrementDistance = GameActivity.incrementDistance;
-    public static long incrementTime = GameActivity.tickRate-10;
-    public static long startPoint = GameActivity.screenHeight;
-    public static long radius = GameActivity.bubbleRadius;
+    public static long bubbleRadius = GameActivityTime.bubbleRadius; //Radius of the bubble in dp
+    public static double incrementDistance = GameActivityTime.incrementDistance;
+    public static long incrementTime = GameActivityTime.tickRate-10;
+    public static long startPoint = GameActivityTime.screenHeight;
+    public static long radius = GameActivityTime.bubbleRadius;
+    Context context = GameActivityTime.context;
 
     Bubble bubble;
 
-    public BubbleView(Context context) {
+    public BubbleViewInfinite(Context context) {
         super(context);
         init();
     }
 
-    public BubbleView(Context context, Bubble bubble)
+    public BubbleViewInfinite(Context context, Bubble bubble)
     {
         super(context);
 
@@ -54,8 +51,6 @@ public class BubbleView extends Button implements View.OnClickListener
         setPadding(0,0,0,0);
         //setHeight(40);
         //setId((int)getID());
-
-
     }
 
     private void init(){
@@ -64,8 +59,13 @@ public class BubbleView extends Button implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        Log.d("click","clicked");
+        Log.d("click", "clicked");
         bubble.clicked();
+        final MediaPlayer mp = MediaPlayer.create(context, R.raw.sound);
+        //mp.release();
+        //mp.setVolume(0.9f, 0.9f);
+        mp.start();
+
         this.setVisibility(View.GONE);
     }
 

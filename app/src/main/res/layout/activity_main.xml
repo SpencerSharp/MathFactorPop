@@ -2,26 +2,115 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/menuActivityRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.spencersharp.mathfactorpop.MainActivity">
+    tools:context="com.example.spencersharp.mathflower.MenuActivity">
 
     <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/textView2"/>
+        android:text="Math Factor Pop"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"/>
+
 
     <TextView
+        android:id="@+id/mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="50dp"
+        android:text="Mode"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"/>
+
+    <RadioGroup
+        android:id="@+id/modeselect"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/mode"
+        android:layout_alignStart="@+id/difficultyselect">
+        <RadioButton android:id="@+id/modeselect_infinite"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Infinite                   "
+                     android:onClick="onModeRadioButtonClicked"/>
+        <RadioButton android:id="@+id/modeselect_time"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="Time Attack"
+                     android:onClick="onModeRadioButtonClicked"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/modeselect"
+        android:layout_marginTop="50dp"
+        android:text="Difficulty"
+        android:textSize="30dp"
+        android:layout_centerHorizontal="true"/>
+
+    <RadioGroup
+        android:id="@+id/difficultyselect"
+        android:layout_below="@+id/difficulty"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton android:id="@+id/difficultyselect_easy"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="easy       "
+                     android:onClick="onDifficultyRadioButtonClicked"/>
+        <RadioButton android:id="@+id/difficultyselect_medium"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="medium      "
+                     android:onClick="onDifficultyRadioButtonClicked"/>
+        <RadioButton android:id="@+id/difficultyselect_hard"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="hard       "
+                     android:onClick="onDifficultyRadioButtonClicked"/>
+        <RadioButton android:id="@+id/difficultyselect_insane"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="insane"
+                     android:onClick="onDifficultyRadioButtonClicked"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/difficultyselect"
+        android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"/>
+        android:textSize="30dp"
+        android:text="Start"
+        android:onClick="startGame"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New CheckBox"
+        android:id="@+id/checkBox"
+        android:layout_below="@+id/difficultyselect"
+        android:layout_alignStart="@+id/title"
+        android:layout_marginTop="50dp"/>
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New CheckBox"
+        android:id="@+id/checkBox2"
+        android:layout_alignTop="@+id/checkBox"
+        android:layout_toEndOf="@+id/checkBox"/>
+
+
 </RelativeLayout>

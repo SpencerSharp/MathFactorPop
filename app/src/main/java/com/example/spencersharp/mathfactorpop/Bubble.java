@@ -1,8 +1,5 @@
 package com.example.spencersharp.mathfactorpop;
 
-import android.content.Context;
-import android.view.View;
-
 /**
  * Created by spencersharp on 6/11/16.
  */
@@ -51,7 +48,7 @@ public class Bubble
 
     public long getYAtMilli(long milli)
     {
-        return (long)(initOffset + (milli*GameActivity.incrementDistance));
+        return (long)(initOffset + (milli* GameActivityTime.incrementDistance));
     }
 
     public long getNumber()
